@@ -1,0 +1,241 @@
+\documentclass[11pt]{amsart}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.15in]{geometry}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\arxiv}[1]{\href{https://arxiv.org/abs/#1}{arXiv:\nolinkurl{#1}}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\cl}[2]{N_{#1}[#2]}
+\setlength{\emergencystretch}{2.5em}
+\makeatletter\g@addto@macro\UrlBreaks{\do-}\makeatother
+
+\begin{document}
+
+\title[One-step nullhomotopy for \v{C}ech complexes]{A one-step nullhomotopy for \v{C}ech complexes of hypercube
+graphs}
+\author{Yitzchak Shmalo}
+\date{26 November 2026}
+\address{Einstein Institute of Mathematics, The Hebrew University of Jerusalem, Jerusalem, Israel}
+\email{yspennstate@gmail.com}
+\subjclass[2020]{55N31, 55U10, 05C12}
+\keywords{\v{C}ech complex, hypercube graph, nerve, persistent homology, contiguity}
+
+\begin{abstract}
+For a graph $G$ and an integer $r\ge0$ let $\N(G,r)$ be the nerve of the closed balls of radius $r/2$ about the vertices
+of $G$ in its geometric realization. Adams, Shukla and Singh proved that the inclusion of $\N(Q_n,r)$ into
+$\N(Q_n,r+2)$ is null-homotopic for the hypercube graph $Q_n$, and asked whether the inclusion into $\N(Q_n,r+1)$ is
+null-homotopic as well. We show that it is, for every $n\ge1$ and $r\ge0$. Consequently every bar in the reduced
+\v{C}ech persistence barcode of $Q_n$ over integer scales lives at a single scale. The proof rests on a lemma for graph maps into a
+bipartite graph that agree up to one edge at every vertex, and it applies equally to Cartesian products of trees.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Let $G$ be a finite connected simple graph, and give its geometric realization the shortest path metric in which every
+edge is isometric to $[0,1]$. For $r\ge0$ the \v{C}ech complex $\N(G,r)$ has vertex set $V(G)$, and a set of vertices is
+a simplex when the closed balls of radius $r/2$ about them have a common point. Since $\N(G,r)=\N(G,\lfloor r\rfloor)$
+for all real $r\ge0$~\cite[Section~2]{ASS}, the filtration is determined by its integer scales.
+
+Adams, Shukla and Singh~\cite{ASS} studied these complexes for the hypercube graph $Q_n$, whose vertices are the words
+in $\{0,1\}^n$ with edges between words at Hamming distance one. Their Theorem~6.1 states that the inclusion
+$\N(Q_n,r)\hookrightarrow\N(Q_n,r+2)$ is homotopic to a constant map for all $n\ge1$ and $r\ge0$; the proof, a technique
+they credit to \v{Z}.~Virk, shows that the maps induced by the coordinate projections
+$p_i(x_1\dots x_n)=(0\dots0\,x_{i+1}\dots x_n)$ are contiguous into scale $r+2$. They show by the example $n=2$, $r=1$
+that $\iota$ and the map induced by $p_1$ need not be contiguous as maps into $\N(Q_n,r+1)$, and
+ask~\cite[Question~7.5]{ASS} whether the inclusions
+$\N(Q_n,r)\hookrightarrow\N(Q_n,r+1)$ are also always null-homotopic. For Vietoris--Rips complexes of hypercube graphs
+the corresponding one-step statement was proved by Adams and Virk~\cite{AV}, who expected that part of their work would
+carry over to \v{C}ech complexes of hypercube graphs.
+
+\begin{theorem}\label{thm:cube}
+For every $n\ge1$ and every real $r\ge0$ the inclusion $\N(Q_n,r)\hookrightarrow\N(Q_n,r+1)$ is null-homotopic.
+\end{theorem}
+
+\begin{corollary}\label{cor:pers}
+For every $n\ge1$, integer $r\ge0$, degree $q\ge0$ and abelian group $M$, the map
+$\widetilde H_q(\N(Q_n,r);M)\to\widetilde H_q(\N(Q_n,r+1);M)$ induced by inclusion is zero. Over a field, every interval in
+the barcode of the reduced persistent homology of $(\N(Q_n,r))_{r\in\mathbb Z_{\ge0}}$ consists of a single scale.
+\end{corollary}
+
+The complexes themselves need not be contractible: $\N(Q_2,1)$ is the $4$-cycle $Q_2$, whose first homology is
+nonzero, so the barcodes in Corollary~\ref{cor:pers} are not empty in general.
+
+The coordinate projections $p_i$ and $p_{i+1}$ already induce contiguous maps into $\N(Q_n,r+1)$ when $r$ is even; the
+difficulty is at odd scales. There we pass from $p_i$ to $p_{i+1}$ through an auxiliary vertex map whose image lies in
+one colour class of the bipartite graph $Q_n$. The argument uses only that the target is bipartite and that consecutive
+maps differ by at most one edge at each vertex (Theorem~\ref{thm:main}). The same conclusion therefore holds for
+Cartesian products of trees (Theorem~\ref{thm:trees}).
+
+\section{Preliminaries}
+
+For a vertex $v$ and an integer $k\ge0$ write $\cl kv=\{x\in V(G):d(x,v)\le k\}$, where $d$ is the graph distance.
+
+\begin{lemma}[{\cite[Lemma~2.2]{ASS}}]\label{lem:ASS}
+Let $G$ be a finite connected simple graph and $k\ge0$ an integer. The simplices of $\N(G,2k)$ are the subsets of the
+sets $\cl kv$, $v\in V(G)$. The simplices of $\N(G,2k+1)$ are the vertices of $G$ and the subsets of the sets
+$\cl kv\cup\cl kw$ over the edges $vw$ of $G$.
+\end{lemma}
+
+A \emph{graph map} $f\colon G\to H$ is a map $V(G)\to V(H)$ such that for every edge $uw$ of $G$ either $f(u)=f(w)$ or
+$f(u)f(w)$ is an edge of $H$. A graph map does not increase distances, so it maps $\cl kv$ into $\cl k{f(v)}$. By
+Lemma~\ref{lem:ASS} it maps $\cl kv\cup\cl kw$ for an edge $vw$ into a generating set of the same form if $f(v)\ne f(w)$,
+and into $\cl k{f(v)}$ otherwise; the latter is a vertex or lies in $\cl k{f(v)}\cup\cl kb$ for a neighbour $b$ of
+$f(v)$, so it is a simplex of $\N(H,2k+1)$. Hence $f$ induces a simplicial map $f_*\colon\N(G,r)\to\N(H,r)$ for every integer $r$.
+For each $r$ write $\iota\colon\N(H,r)\hookrightarrow\N(H,r+1)$ for the inclusion.
+
+Two simplicial maps $\phi,\psi\colon K\to L$ are \emph{contiguous} if $\phi(\sigma)\cup\psi(\sigma)$ is a simplex of $L$
+for every simplex $\sigma$ of $K$. Contiguous maps have homotopic geometric realizations~\cite[Section~3.5]{Sp}: the straight-line homotopy between
+them maps each simplex $\sigma$ into the closed simplex spanned by $\phi(\sigma)\cup\psi(\sigma)$.
+
+\section{Maps that differ by at most one edge}
+
+\begin{theorem}\label{thm:main}
+Let $G$ and $H$ be finite connected simple graphs with $H$ bipartite, and let $f,g\colon G\to H$ be graph maps with
+$d(f(v),g(v))\le1$ for every $v\in V(G)$. Then for every integer $r\ge0$ the maps
+$\iota\circ f_*,\ \iota\circ g_*\colon\N(G,r)\to\N(H,r+1)$ are homotopic.
+\end{theorem}
+
+\begin{proof}
+If $H$ has a single vertex then $f=g$. Otherwise every vertex of $H$ has a neighbour, since $H$ is connected.
+
+\emph{Even scales, $r=2k$.} Let $\sigma$ be a simplex of $\N(G,2k)$. By Lemma~\ref{lem:ASS},
+$\sigma\subseteq\cl kc$ for some vertex $c$, so $f(\sigma)\subseteq\cl k{f(c)}$ and $g(\sigma)\subseteq\cl k{g(c)}$. If
+$f(c)g(c)$ is an edge then $f(\sigma)\cup g(\sigma)\subseteq\cl k{f(c)}\cup\cl k{g(c)}$, a simplex of $\N(H,2k+1)$. If
+$f(c)=g(c)$ the union lies in $\cl k{f(c)}\cup\cl kb$ for any neighbour $b$ of $f(c)$. So $\iota f_*$ and $\iota g_*$
+are contiguous. Bipartiteness is not used at even scales.
+
+\emph{Odd scales, $r=2k+1$.} Let $V(H)=A\sqcup B$ be a bipartition. For $x\in V(H)$ the parity of $d(x,a)$ is the same
+for all $a\in A$: it is even if $x\in A$ and odd if $x\in B$. Define $h\colon V(G)\to A$ by
+\[
+h(v)=\begin{cases}
+\text{the one of }f(v),g(v)\text{ that lies in }A,&\text{if }f(v)\ne g(v),\\
+f(v),&\text{if }f(v)=g(v)\in A,\\
+\text{a fixed neighbour of }f(v),&\text{if }f(v)=g(v)\in B.
+\end{cases}
+\]
+Since $f(v)$ and $g(v)$ are equal or adjacent, $h(v)\in A$ is at distance at most one from both. We show that for every
+simplex $\sigma$ of $\N(G,2k+1)$ the set $f(\sigma)\cup h(\sigma)$ lies in $\cl{k+1}p$ for some vertex $p$, and is
+therefore a simplex of $\N(H,2k+2)$ by Lemma~\ref{lem:ASS}.
+
+A single vertex $\sigma=\{v\}$ is clear, with $p=f(v)$. Otherwise $\sigma\subseteq\cl ku\cup\cl kw$ for an edge $uw$ of
+$G$, and $f(\sigma)\subseteq\cl k{f(u)}\cup\cl k{f(w)}$. If $f(u)=f(w)=c$, then $f(\sigma)\subseteq\cl kc$ and
+$h(\sigma)\subseteq\cl{k+1}c$; take $p=c$. If $f(u)f(w)$ is an edge, one endpoint lies in $A$ and the other in $B$, and
+we choose $p\in\{f(u),f(w)\}$ such that $d(p,a)\equiv k+1\pmod 2$ for all $a\in A$. Every point of $f(\sigma)$ is within
+$k$ of one endpoint, hence within $k+1$ of $p$. For $v\in\sigma$,
+\[
+d(p,h(v))\le d(p,f(v))+d(f(v),h(v))\le k+2,
+\]
+and $d(p,h(v))\equiv k+1\pmod2$ because $h(v)\in A$. Hence $d(p,h(v))\le k+1$.
+
+In particular $h(\sigma)$ is a simplex, so $h$ defines a simplicial map $\N(G,2k+1)\to\N(H,2k+2)$, and it is
+contiguous to $\iota f_*$. The argument used only that $f$ is a graph map and that $h(v)\in A$ lies within one of $f(v)$,
+so it applies equally to $g$. Thus $\iota f_*\simeq h\simeq\iota g_*$.
+\end{proof}
+
+\begin{corollary}\label{cor:chain}
+Let $H$ be a finite connected bipartite graph, and suppose there are graph maps $f_0,f_1,\dots,f_m\colon H\to H$ with
+$f_0$ the identity, $f_m$ constant, and $d(f_{j-1}(v),f_j(v))\le1$ for all $j$ and $v$. Then for every real $r\ge0$ the
+inclusion $\N(H,r)\hookrightarrow\N(H,r+1)$ is null-homotopic.
+\end{corollary}
+
+\begin{proof}
+Since $\N(H,r)=\N(H,\lfloor r\rfloor)$ and $\lfloor r+1\rfloor=\lfloor r\rfloor+1$, we may take $r$ to be an integer.
+The inclusion equals $\iota\circ(f_0)_*$, and $\iota\circ(f_m)_*$ is constant. Theorem~\ref{thm:main} gives
+$\iota(f_{j-1})_*\simeq\iota(f_j)_*$ for each $j$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:cube} and Corollary~\ref{cor:pers}]
+The graph $Q_n$ is bipartite, with the colour of a word given by the parity of its number of ones. Put $f_0$ the
+identity and $f_j=p_j$ for $1\le j\le n$. Each $p_j$ maps an edge to an edge or to a single vertex, $p_n$ is constant,
+and $p_{j-1}(x)$ and $p_j(x)$ differ at most in coordinate $j$. Corollary~\ref{cor:chain} gives
+Theorem~\ref{thm:cube}. A null-homotopic map induces zero on reduced homology with any coefficients, which is
+Corollary~\ref{cor:pers}; over a field the interval decomposition of the persistence module then has no interval
+containing two consecutive scales.
+\end{proof}
+
+\begin{remark}
+At even scales Theorem~\ref{thm:main} shows that $\iota(p_{j-1})_*$ and $\iota(p_j)_*$ are contiguous. At odd scales the
+intermediate map is needed. For instance, in $Q_2$ at scale $r=1$, the identity and $p_1$ are not contiguous into
+$\N(Q_2,2)$, which is the boundary of a tetrahedron on the four vertices~\cite[Section~6]{ASS}. The
+map $h$ of the proof sends all four vertices into the colour class $\{00,11\}$, and both contiguities hold.
+\end{remark}
+
+\section{Products of trees}
+
+\begin{theorem}\label{thm:trees}
+Let $G=T_1\,\square\,\cdots\,\square\,T_m$ be a Cartesian product of finite trees. Then for every real $r\ge0$ the
+inclusion $\N(G,r)\hookrightarrow\N(G,r+1)$ is null-homotopic.
+\end{theorem}
+
+\begin{proof}
+A Cartesian product of bipartite graphs is bipartite. For a single tree $T$ with $t\ge2$ vertices, let
+$T=S_0\supset S_1\supset\dots\supset S_{t-1}$ be subtrees with $S_{i}=S_{i-1}\setminus\{\ell_i\}$ for a leaf $\ell_i$ of
+$S_{i-1}$ with neighbour $b_i$ in $S_{i-1}$. Let $\rho_i\colon S_{i-1}\to S_i$ fix every vertex except $\ell_i$, which
+it sends to $b_i$, and set $\phi_0=\mathrm{id}_T$ and $\phi_i=\rho_i\circ\phi_{i-1}$. Each $\phi_i$ is a graph map
+$T\to T$, $\phi_{t-1}$ is constant, and $\phi_{i-1}(x)$ and $\phi_i(x)$ are equal or adjacent for every $x$.
+
+Write $t_s=|V(T_s)|$. In $G$, run through these sequences one factor at a time: first apply $\phi_1,\dots,\phi_{t_1-1}$ to the first
+coordinate with the others fixed, then the sequence for $T_s$ to coordinate $s$ for $s=2,\dots,m$ in turn. An edge of $G$ changes
+one coordinate along an edge of that factor, and its image changes at most that coordinate along an edge or not at all,
+so every map in the sequence is a graph map of $G$. Consecutive maps differ in one coordinate by at most one edge, and
+the last map is constant. Corollary~\ref{cor:chain} applies.
+\end{proof}
+
+Theorem~\ref{thm:cube} is the case in which every factor is the edge $K_2$.
+
+\section*{Acknowledgements and funding}
+This work was done by AI agents, Claude (Anthropic) and Codex (OpenAI), connected to Math Brain~\cite{MathBrainRepo}
+and working together inside the Brain framework~\cite{BrainFramework}, a shared, persistent memory in which the agents
+record claims, proofs, failed attempts and methods, retrieve one another's results, coordinate who works on what, and
+audit each other's work. For more on the Brain and Math Brain, see the Math Brain paper~\cite{MathBrainPaper}, the Math
+Brain repository~\cite{MathBrainRepo} and the Brain framework repository~\cite{BrainFramework}.
+
+The research presented in this paper was supported by the European Research Council (ERC) under the European Union's
+Horizon Europe research and innovation programme (grant agreement No.~101041711), by the Simons Foundation as part of
+the Collaboration on the Mathematical and Scientific Foundations of Deep Learning, by Heights Labs, by Convex Nexus
+Capital, by the Israel Science Foundation (grant number 2258/19), and by the Israel Science Foundation (ISF Grant
+4101/25).
+
+\section*{Declaration of competing interest}
+The author holds equity in Heights Labs and in Convex Nexus Capital and has a management role at Convex Nexus Capital.
+These entities are included in the funding declaration above.
+
+\section*{Data availability}
+No data were generated or analysed in this work. A Python script that tests both contiguities of the proof of
+Theorem~\ref{thm:cube} for $n\le5$ and all $r\le2n$, computing the \v{C}ech complexes from points of the geometric
+realization, is at \url{https://github.com/yspennstate/cech-hypercube-one-step/tree/v1.0}; the command
+\texttt{python check\_one\_step.py 5} runs it for $n\le5$.
+
+\section*{Declaration of generative AI and AI-assisted technologies}
+This paper is part of a research project on AI proving problems. Codex agents (OpenAI) produced the proof, and Claude
+agents (Anthropic) checked the proof and the references and wrote the manuscript. The question is due to Adams, Shukla
+and Singh~\cite{ASS}, and the coordinate projections and the use of contiguity are taken from their proof of
+Theorem~6.1. The author directed the work and is responsible for the content of the paper and for decisions concerning
+its dissemination.
+
+\begin{thebibliography}{9}
+\bibitem{ASS} H.~Adams, S.~Shukla and A.~Singh, \emph{\v{C}ech complexes of hypercube graphs}, Homology Homotopy Appl.
+\textbf{27} (2025), no.~1, 83--105, \href{https://doi.org/10.4310/HHA.2025.v27.n1.a6}{doi:10.4310/HHA.2025.v27.n1.a6};
+\arxiv{2212.05871}. Numbered results are cited as in the arXiv version.
+\bibitem{AV} H.~Adams and \v{Z}.~Virk, \emph{Lower bounds on the homology of Vietoris--Rips complexes of hypercube
+graphs}, Bull. Malays. Math. Sci. Soc. \textbf{47} (2024), no.~3, Paper No.~72,
+\href{https://doi.org/10.1007/s40840-024-01663-x}{doi:10.1007/s40840-024-01663-x}; \arxiv{2309.06222}.
+\bibitem{Sp} E.~H.~Spanier, \emph{Algebraic Topology}, McGraw-Hill, New York, 1966.
+\bibitem{MathBrainRepo} Y.~Shmalo, \emph{Math Brain: public snapshot, code and tests}, 2026,
+\url{https://github.com/yspennstate/math-brain-public/tree/5427734deee9be643d6dfbdd5e7d4baeeefe4a4a}.
+\bibitem{MathBrainPaper} Y.~Shmalo, \emph{Math Brain: shared, auditable memory for multi-agent mathematical
+research}, 2026, \href{https://doi.org/10.5281/zenodo.24150837}{doi:10.5281/zenodo.24150837},
+\url{https://github.com/yspennstate/math-brain-public/tree/5427734deee9be643d6dfbdd5e7d4baeeefe4a4a/papers/math-brain-2026-10-24}.
+\bibitem{BrainFramework} Y.~Shmalo, \emph{Brain Framework}, public software repository, 2026,
+\url{https://github.com/yspennstate/brain-framework-public/tree/46b935d26d5a2893f7790b60466387dd8da47ef5}.
+\end{thebibliography}
+
+\end{document}
